@@ -7,11 +7,21 @@ import cors from 'cors';
 dotenv.config();
 
 const app = express();
+
+// MUST: handle OPTIONS BEFORE routes
+app.options("*", cors({
+  origin: ["http://localhost:5173"],
+  methods: ["GET", "POST", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+}));
+
+// MUST: apply cors for requests
 app.use(cors({
   origin: ["http://localhost:5173"],
   methods: ["GET", "POST", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 }));
+
 app.use(bodyParser.json());
 
 // INIT OPENAI
